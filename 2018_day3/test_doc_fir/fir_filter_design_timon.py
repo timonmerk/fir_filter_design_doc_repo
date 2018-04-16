@@ -651,14 +651,19 @@ def remez(numtaps, bands, desired, weight=None, Hz=None, type='bandpass',
     >>> w, h = signal.freqz(taps, [1], worN=2000)
     >>> plot_response(fs, w, h, "High-pass Filter")
     >>> # Band-pass filter design parameters
-    >>> fs = 22050.0         # Sample rate, Hz
+    For a signal sampled with 22 kHz a bandpassfilter with a pass band of 2-5 kHz gets calculated using the remez algorithm.
+    The transition width is 260 Hz and the filter order 10.
+    >>> fs = 22000.0         # Sample rate, Hz
     >>> band = [2000, 5000]  # Desired pass band, Hz
     >>> trans_width = 260    # Width of transition from pass band to stop band, Hz
-    >>> numtaps = 125        # Size of the FIR filter.
+    >>> numtaps = 10        # Size of the FIR filter.
     >>> edges = [0, band[0] - trans_width, band[0], band[1], band[1] + trans_width, 0.5*fs]
     >>> taps = signal.remez(numtaps, edges, [0, 1, 0], Hz=fs)
     >>> w, h = signal.freqz(taps, [1], worN=2000)
     >>> plot_response(fs, w, h, "Band-pass Filter")
+    It can be seen that the low order leads to higher ripple and less steep transitions.
+    There is very low attenuation in the stop band and little overshoot in the pass band.
+    Of course the desired gain can be better approximated with a higher filter order.
     >>> # Band-stop filter design parameters
     >>> fs = 22050.0         # Sample rate, Hz
     >>> band = [6000, 8000]  # Desired stop band, Hz
